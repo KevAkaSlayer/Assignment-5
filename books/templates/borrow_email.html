@@ -1,0 +1,31 @@
+<h3>Hello {{user.first_name}} {{user.last_name}}</h3>
+
+<p>You have successfully borrowed {{book.title}}.</p>
+
+<h3> Details: </h3>
+
+<div class="card m-2">
+    <div class="card-body">
+      <h5 class="card-title">{{book.title}}</h5>
+      <p class="card-text">{{book.description |truncatewords:100}}</p>
+      <h5 class='text-bg-dark  '>
+        Category :
+
+      {% for cat in book.category.all %}
+           
+      {{cat.name}} 
+
+      {% endfor %}
+    </h5>
+      <h5>
+          Price : {{book.price}} $
+      </h5>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<p>Thank you for being with Us</p>
+<p>LMS</p>

@@ -1,0 +1,77 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
+
+<div class ="bg-body-secondary"> 
+<div class="container pt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img style="height:500px;width:400px;"
+        src="{{ book.image.url }}"
+        class="img-fluid"
+        alt="{{ book.name }} Image"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <div class="mb-4">
+        <h2>{{ book.name }}</h2>
+        <p class="text-muted">{{ book.description }}</p>
+      </div>
+      <div class='d-flex gap-3 p-2'>
+     <h4> Category : </h4>
+
+      {% for cat in book.category.all %}
+
+      <a class='btn btn-info ' href="{% url 'catfilter' cat.slug %}"> {{cat.name}}</a>
+           
+      
+
+      {% endfor %}
+
+</div>
+
+      <div class="mb-4">
+        <h4 class='p-2'>Price: ${{ book.price }}</h4>
+        {% if user.is_authenticated %} 
+        
+      {% if possible_return %}
+        <a class="btn btn-warning" href="{% url 'return' book.id %}">Return A Copy</a>
+        {% else %}
+        <a class="btn btn-success" href="{% url 'buy' book.id %}">Borrow Now</a>
+
+        {% endif %}
+        {% if borrowed %} <a class="btn btn-primary" href="{% url 'comment' book.id %}">Write a Review</a> {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class=" p-2 w-100   bg-body-secondary  ">
+    <div class="text-center">
+        <h1 class="mb-4 pt-5 ">Reviews</h1>
+         <h4 class='px-3 '>Total :{{comment| length}}</h4>
+   
+
+     <div class='row gap-3 p-2'> 
+       {% for cm in comment %}
+
+     
+       <div class="card text-black bg-secondary-subtle  mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{cm.created_on}}</div>
+        <div class="card-body">
+          <h5 class="card-title">{{cm.user.first_name}} {{cm.user.last_name}}</h5>
+          <p class="card-text">{{cm.Comment}}</p>
+        </div>
+      </div>
+   
+    
+       {% endfor %}
+      </div>
+
+
+    </div>
+
+  
+</div>
+
+{% endblock %}
