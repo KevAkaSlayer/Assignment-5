@@ -78,12 +78,12 @@ def ReturnBook(request,id):
     
 @login_required(login_url='login')
 def comment(request,id):
-    form =CommentForm
-    if request.method == "POST":
-        form = CommentForm(request.POST)
+    form =CommentForm()
+    if request.method=='POST':
+        form =CommentForm(request.POST)
         if form.is_valid():
-            book = Book.objects.get(pk= id)
-            cmnt = form.cleaned_data['comment']
-            Comment.objects.create(user = request.user,Comment = cmnt,book=book)
-            return redirect('detail',id = id)
-        return render(request,'comment.html',{'form':form})
+            book = Book.objects.get(pk=id)
+            com = form.cleaned_data['comment']
+            Comment.objects.create(user=request.user,Comment=com , book=book)
+            return redirect('detail',id=id)
+    return render(request,'comment.html',{'form':form})

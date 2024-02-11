@@ -1,4 +1,4 @@
 BORROW_CHOICES = (
-    ('BORROWED','Borrowed'),
-    ('RETURNED','Returned')
+    ('Borrowed', 'Borrowed'),
+    ('Returned', 'Returned'),
 )

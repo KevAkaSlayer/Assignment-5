@@ -37,7 +37,7 @@ def LogoutView(request):
 
 @login_required(login_url='login')
 def profile(request):
-    borrowed_instance = Borrow.objects.filter(user = request.user)
-    borrowed_instance_count = Borrow.objects.filter(user =request.user,type = "Borrowed").count
+    borrowed_instances = Borrow.objects.filter(user=request.user)
+    borrowed_instances_count = Borrow.objects.filter(user=request.user, type='Borrowed').count
 
-    return render(request,'profile.html',{'borrowed_instance' : borrowed_instance,'count':borrowed_instance_count})
+    return render(request,'profile.html',{'borrowed_instances' :borrowed_instances,'count':borrowed_instances_count})

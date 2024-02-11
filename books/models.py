@@ -26,6 +26,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE,related_name = 'comments',null = True)
 
     Comment = models.TextField()
-    created_on = models.DateTimeField(auto_now_add = True ,blank = True)
+    created_on = models.DateTimeField(auto_now_add = True ,blank = True,null = True)
     
 
