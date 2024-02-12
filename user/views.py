@@ -9,19 +9,33 @@ from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from . import forms
+from account.models import UserAccount
 
 # Create your views here.
-def register(request):
-    if request.method == 'POST':
-        form = forms.UserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Account Created Successfully')
-            return redirect('login')
+# def register(request):
+#     if request.method == 'POST':
+#         form = forms.UserForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Account Created Successfully')
+#             return redirect('login')
     
-    else:
-        form = forms.UserForm()
-    return render(request, 'signup.html', {'form' : form, 'type' : 'Register'})
+#     else:
+#         form = forms.UserForm()
+#     return render(request, 'signup.html', {'form' : form, 'type' : 'Register'})
+
+class register(CreateView):
+    model = User
+    template_name = 'signup.html'
+    form_class= UserForm
+    success_url= reverse_lazy('home')
+    def form_valid(self, form):
+        our_user = super().form_valid(form)
+        UserAccount.objects.create(user=self.object)
+        user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+        login(self.request, user)
+
+        return our_user
 
 
 class UserLoginView(LoginView):
